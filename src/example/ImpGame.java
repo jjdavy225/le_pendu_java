@@ -12,7 +12,14 @@ public class ImpGame implements Game {
         return "Bonjour et bienvenue ! Voulez-vous débuter une partie du jeu \"Le pendu\" ?";
     }
 
-    public Integer getNbChances(){
+    public Void restart() {
+        ImpGame.foundLettersList = "";
+        ImpGame.nbChances = 3;
+
+        return null;
+    }
+
+    public Integer getNbChances() {
         return ImpGame.nbChances;
     }
 
@@ -29,12 +36,12 @@ public class ImpGame implements Game {
         return underscore;
     }
 
-    public Boolean verifyLetter(String letter){
+    public Boolean verifyLetter(String letter) {
         String mot = ImpGame.mot_a_deviner;
-        if (mot.indexOf(letter.charAt(0)) == -1) {
+        if (mot.toLowerCase().indexOf(letter.toLowerCase().charAt(0)) == -1) {
             ImpGame.nbChances = ImpGame.nbChances - 1;
             return false;
-        }else{
+        } else {
             ImpGame.nbChances = 3;
             return true;
         }
@@ -44,7 +51,8 @@ public class ImpGame implements Game {
         String mot = ImpGame.mot_a_deviner;
         String underscore = "";
         for (int i = 0; i < mot.length(); i++) {
-            if (mot.toLowerCase().charAt(i) == letter.toLowerCase().charAt(0) || ImpGame.foundLettersList.indexOf(mot.charAt(i)) != -1) {
+            if (mot.toLowerCase().charAt(i) == letter.toLowerCase().charAt(0)
+                    || ImpGame.foundLettersList.indexOf(mot.charAt(i)) != -1) {
                 underscore = underscore + mot.charAt(i) + " ";
                 if (ImpGame.foundLettersList.indexOf(mot.charAt(i)) == -1) {
                     ImpGame.foundLettersList += mot.charAt(i);

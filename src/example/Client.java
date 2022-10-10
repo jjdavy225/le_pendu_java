@@ -62,6 +62,7 @@ public class Client {
                     System.out.println("Répondez par oui ou non !");
                     ans = input.nextLine();
                 }
+                server.restart();
             }
             if (!ans.toLowerCase().equals("oui") && !ans.toLowerCase().equals("o")) {
                 System.out.println();

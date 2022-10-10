@@ -9,4 +9,5 @@ public interface Game extends Remote {
     String newHiddenWord() throws RemoteException;
     String foundLetters(String letter) throws RemoteException;
     Boolean verifyLetter(String letter) throws RemoteException;
+    Void restart() throws RemoteException;
 }
