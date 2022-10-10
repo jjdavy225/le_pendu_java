@@ -44,7 +44,7 @@ public class ImpGame implements Game {
         String mot = ImpGame.mot_a_deviner;
         String underscore = "";
         for (int i = 0; i < mot.length(); i++) {
-            if (mot.charAt(i) == letter.charAt(0) || ImpGame.foundLettersList.indexOf(mot.charAt(i)) != -1) {
+            if (mot.toLowerCase().charAt(i) == letter.toLowerCase().charAt(0) || ImpGame.foundLettersList.indexOf(mot.charAt(i)) != -1) {
                 underscore = underscore + mot.charAt(i) + " ";
                 if (ImpGame.foundLettersList.indexOf(mot.charAt(i)) == -1) {
                     ImpGame.foundLettersList += mot.charAt(i);
