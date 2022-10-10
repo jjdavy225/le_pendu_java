@@ -22,10 +22,19 @@ public class Client {
             System.out.println();
             System.out.println("Répondez par oui ou non !");
             String ans = input.nextLine();
-            System.out.println(ans);
+            System.out.println();
             if (ans.equals("OUI") || ans.equals("oui")|| ans.equals("Oui")) {
                 startGame = server.startGame();
-                System.out.println(startGame);
+                Integer nb_chances = 3;
+                System.out.println("Vous avez " + nb_chances + " chances restantes pour deviner le mot du jour");
+                System.out.println("Mot à deviner : " + startGame);
+                
+                while (nb_chances > 0) {
+                    String letter = input.nextLine();
+                    System.out.println(server.verifyLetter(letter));
+                    
+                }
+
                 
             } else {
                 System.out.println();
