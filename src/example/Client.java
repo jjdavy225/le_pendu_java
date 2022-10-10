@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Client {
 
-    private static String startGame;
+    private static String newHiddenWord;
 
     private Client() {}
 
@@ -24,14 +24,26 @@ public class Client {
             String ans = input.nextLine();
             System.out.println();
             if (ans.equals("OUI") || ans.equals("oui")|| ans.equals("Oui")) {
-                startGame = server.startGame();
-                Integer nb_chances = 3;
+                newHiddenWord = server.newHiddenWord();
+                Integer nb_chances = server.getNbChances();
                 System.out.println("Vous avez " + nb_chances + " chances restantes pour deviner le mot du jour");
-                System.out.println("Mot à deviner : " + startGame);
+                System.out.println("Mot à deviner : " + newHiddenWord);
                 
                 while (nb_chances > 0) {
                     String letter = input.nextLine();
-                    System.out.println(server.verifyLetter(letter));
+                    nb_chances = server.getNbChances();
+                    if (server.verifyLetter(letter)) {
+                        nb_chances = server.getNbChances();
+                        System.out.println();
+                        System.out.println("Bravo :) ! Continuer ainsi ;) Vous avez encore " + nb_chances + " chances restantes");
+                        System.out.println("Mot à deviner : " + server.foundLetters(letter));
+                    } else {
+                        nb_chances = server.getNbChances();
+                        System.out.println();
+                        System.out.println("Oups :( Vous avez encore " + nb_chances + "chance(s) restante(s)");
+                        System.out.println("Mot à deviner : " + server.foundLetters(letter));
+                    }
+
                     
                 }
 
