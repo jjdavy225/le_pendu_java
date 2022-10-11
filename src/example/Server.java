@@ -15,7 +15,7 @@ public class Server extends ImpGame {
             Game stub = (Game) UnicastRemoteObject.exportObject(obj, 0);
 
             // Bind the remote object's stub in the registry
-            Registry registry = LocateRegistry.createRegistry(1116);
+            Registry registry = LocateRegistry.createRegistry(1099);
             registry.rebind("Game", stub);
 
             System.err.println("Serveur prêt !");

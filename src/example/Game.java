@@ -8,6 +8,6 @@ public interface Game extends Remote {
     Integer getNbChances() throws RemoteException;
     String newHiddenWord() throws RemoteException;
     String foundLetters(String letter) throws RemoteException;
-    Boolean verifyLetter(String letter) throws RemoteException;
+    Integer verifyLetter(String letter) throws RemoteException;
     Void restart() throws RemoteException;
 }

@@ -6,19 +6,17 @@ import java.util.Scanner;
 
 public class Client {
 
-    private static String newHiddenWord;
-
     private Client() {
     }
 
     public static void main(String[] args) {
 
         try {
-            Registry registry = LocateRegistry.getRegistry("192.168.1.33", 1116);
+            Registry registry = LocateRegistry.getRegistry("192.168.1.104",1099);
             Game server = (Game) registry.lookup("Game");
+            server.restart();
             String response = server.sayHello();
-            System.out
-                    .println("---------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------");
             System.out.println("Serveur: " + response);
             Scanner input = new Scanner(System.in);
             System.out.println();
@@ -26,7 +24,7 @@ public class Client {
             String ans = input.nextLine();
             System.out.println();
             while (ans.toLowerCase().equals("oui") || ans.toLowerCase().equals("o")) {
-                newHiddenWord = server.newHiddenWord();
+                String newHiddenWord = server.newHiddenWord();
                 Integer nb_chances = server.getNbChances();
                 System.out.println("Vous avez " + nb_chances + " chances restantes pour deviner le mot du jour");
                 System.out.println("Mot à deviner : " + newHiddenWord);
@@ -35,18 +33,29 @@ public class Client {
 
                 while (nb_chances > 0 && endGame) {
                     String letter = input.nextLine();
+                    while (letter.length() > 1) {
+                        System.out.println();
+                        System.out.println("Veuillez rentrer une seule lettre à la fois");
+                        letter = input.nextLine();
+                    }
                     nb_chances = server.getNbChances();
                     foundLetters = server.foundLetters(letter);
-                    if (server.verifyLetter(letter)) {
+                    Integer verifyLetter = server.verifyLetter(letter);
+                    if (verifyLetter == 2) {
                         nb_chances = server.getNbChances();
                         System.out.println();
                         System.out.println(
                                 "Bravo :) ! Continuer ainsi ;) Vous avez encore " + nb_chances + " chances restantes");
                         System.out.println("Mot à deviner : " + foundLetters);
-                    } else {
+                    } else if(verifyLetter == 1){
                         nb_chances = server.getNbChances();
                         System.out.println();
-                        System.out.println("Oups :( Vous avez encore " + nb_chances + "chance(s) restante(s)");
+                        System.out.println("Vous avez déjà trouvé cette lettre. Veuillez réessayer. Vous avez encore " + nb_chances + " chance(s) restante(s)");
+                        System.out.println("Mot à deviner : " + foundLetters);
+                    } else if(verifyLetter == 0){
+                        nb_chances = server.getNbChances();
+                        System.out.println();
+                        System.out.println("Oups :( Vous avez encore " + nb_chances + " chance(s) restante(s)");
                         System.out.println("Mot à deviner : " + foundLetters);
                     }
                     endGame = foundLetters.indexOf("_") != -1;
