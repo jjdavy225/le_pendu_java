@@ -7,6 +7,7 @@ public class ImpGame implements Game {
     private String mot_a_deviner;
     private String foundLettersList = "";
     private Integer nbChances = 3;
+    private Character newFoundLetter = '.';
 
     public String sayHello() {
         return "Bonjour et bienvenue ! Voulez-vous débuter une partie du jeu \"Le pendu\" ?";
@@ -15,6 +16,7 @@ public class ImpGame implements Game {
     public Void restart() {
         this.foundLettersList = "";
         this.nbChances = 3;
+        this.newFoundLetter = '.';
 
         return null;
     }
@@ -41,23 +43,24 @@ public class ImpGame implements Game {
         if (mot.toLowerCase().indexOf(letter.toLowerCase().charAt(0)) == -1) {
             this.nbChances = this.nbChances - 1;
             return 0;
-        }else if(this.foundLettersList.toLowerCase().indexOf(letter.toLowerCase().charAt(0)) != -1){
-            return 1;
-        } else {
+        } else if (letter.toLowerCase().charAt(0) == this.newFoundLetter) {
             this.nbChances = 3;
             return 2;
+        } else {
+            return 1;
         }
     }
 
     public String foundLetters(String letter) {
         String mot = this.mot_a_deviner;
         String underscore = "";
+        this.newFoundLetter = '.';
         for (int i = 0; i < mot.length(); i++) {
-            if (mot.toLowerCase().charAt(i) == letter.toLowerCase().charAt(0)
-                    || this.foundLettersList.indexOf(mot.charAt(i)) != -1) {
+            if (mot.toLowerCase().charAt(i) == letter.toLowerCase().charAt(0) || this.foundLettersList.indexOf(mot.charAt(i)) != -1) {
                 underscore = underscore + mot.charAt(i) + " ";
                 if (this.foundLettersList.indexOf(mot.charAt(i)) == -1) {
                     this.foundLettersList += mot.charAt(i);
+                    this.newFoundLetter = mot.toLowerCase().charAt(i);
                 }
             } else {
                 underscore = underscore + "_ ";

@@ -12,7 +12,7 @@ public class Client {
     public static void main(String[] args) {
 
         try {
-            Registry registry = LocateRegistry.getRegistry("192.168.1.104",1099);
+            Registry registry = LocateRegistry.getRegistry("192.168.97.86",1099);
             Game server = (Game) registry.lookup("Game");
             server.restart();
             String response = server.sayHello();
@@ -22,10 +22,10 @@ public class Client {
             System.out.println();
             System.out.println("Répondez par oui ou non !");
             String ans = input.nextLine();
-            System.out.println();
             while (ans.toLowerCase().equals("oui") || ans.toLowerCase().equals("o")) {
                 String newHiddenWord = server.newHiddenWord();
                 Integer nb_chances = server.getNbChances();
+                System.out.println();
                 System.out.println("Vous avez " + nb_chances + " chances restantes pour deviner le mot du jour");
                 System.out.println("Mot à deviner : " + newHiddenWord);
                 String foundLetters = "";
